@@ -79,13 +79,30 @@ nav{position:sticky;top:0;z-index:20;background:rgba(12,14,18,.92);
 .act .lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;
   text-transform:uppercase;color:var(--act);margin-bottom:6px;font-weight:700}
 .act .items{color:var(--mut);font-size:14px;font-family:'Archivo Narrow',sans-serif;font-weight:600}
+/* progress bar per day */
+.dprog{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.dprog .bar{flex:1;height:6px;background:var(--panel2);border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.dprog .fill{height:100%;width:0;background:linear-gradient(90deg,var(--lo),#34d399);transition:width .3s ease}
+.dprog .pct{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--mut);min-width:64px;text-align:right}
+.dprog .clr{font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--dim);background:transparent;border:1px solid var(--line);border-radius:6px;padding:5px 10px;cursor:pointer;transition:.15s}
+.dprog .clr:hover{color:var(--ink);border-color:#333a47}
 .list{display:flex;flex-direction:column;gap:8px}
 .ex{
-  display:grid;grid-template-columns:1fr auto;gap:10px 16px;align-items:center;
+  display:grid;grid-template-columns:auto 1fr auto;gap:10px 14px;align-items:center;
   background:var(--panel);border:1px solid var(--line);border-radius:12px;
-  padding:14px 16px;transition:.15s;
+  padding:14px 16px;transition:.15s;cursor:pointer;
 }
 .ex:hover{border-color:#333a47;background:var(--panel2)}
+.ex .chk{
+  width:24px;height:24px;border:2px solid var(--dim);border-radius:7px;flex:none;
+  display:grid;place-items:center;transition:.15s;background:transparent;
+}
+.ex .chk svg{width:14px;height:14px;opacity:0;transform:scale(.5);transition:.15s}
+.ex.done .chk{background:var(--lo);border-color:var(--lo)}
+.ex.done .chk svg{opacity:1;transform:scale(1)}
+.ex.done{opacity:.5}
+.ex.done .name{text-decoration:line-through;text-decoration-color:var(--dim)}
 .ex .n{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);font-weight:700}
 .ex .name{font-weight:700;font-size:15px;letter-spacing:-.01em;display:flex;gap:9px;align-items:baseline;flex-wrap:wrap}
 .ex .cue{font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:12.5px;color:var(--dim)}
@@ -125,8 +142,8 @@ nav{position:sticky;top:0;z-index:20;background:rgba(12,14,18,.92);
 footer{text-align:center;color:var(--dim);font-family:'JetBrains Mono',monospace;
   font-size:10px;letter-spacing:.15em;margin-top:36px;text-transform:uppercase}
 @media(max-width:520px){
-  .ex{grid-template-columns:1fr;gap:11px}
-  .stats{justify-content:flex-start}
+  .ex{grid-template-columns:auto 1fr;gap:11px 12px}
+  .stats{grid-column:2;justify-content:flex-start}
   .wk{grid-template-columns:1fr auto;gap:8px 12px}
   .wk .desc{grid-column:1/-1}
 }
@@ -159,6 +176,7 @@ footer{text-align:center;color:var(--dim);font-family:'JetBrains Mono',monospace
   <div class="dayhead"><div class="daytitle">Martes · Upper A</div><span class="tag up">Upper</span></div>
   <div class="focus">Sesgo: Pecho + Dorsal</div>
   <div class="act"><div class="lbl">Activación</div><div class="items">Bici 5'  ·  Band pull-apart 2×20  ·  Chest press técnico 1×15</div></div>
+  <div class="dprog"><div class="bar"><div class="fill" id="f1"></div></div><div class="pct" id="p1">0/0</div><button class="clr" data-clr="l1">Limpiar</button></div>
   <div class="list" id="l1"></div>
   <div class="foot"><b>Progresión:</b> doble progresión — subir reps dentro del rango, luego carga. Sem 4 descarga: −1 set · RPE 6-7.</div>
 </section>
@@ -166,6 +184,7 @@ footer{text-align:center;color:var(--dim);font-family:'JetBrains Mono',monospace
   <div class="dayhead"><div class="daytitle">Jueves · Lower A</div><span class="tag lo">Lower</span></div>
   <div class="focus">Sesgo: Cuádriceps</div>
   <div class="act"><div class="lbl">Activación</div><div class="items">Bici 5'  ·  Extensión cuádriceps 1×20 ligero</div></div>
+  <div class="dprog"><div class="bar"><div class="fill" id="f2"></div></div><div class="pct" id="p2">0/0</div><button class="clr" data-clr="l2">Limpiar</button></div>
   <div class="list" id="l2"></div>
   <div class="foot"><b>Progresión:</b> doble progresión. Sem 4 descarga: −1 set · RPE 6-7.</div>
 </section>
@@ -173,6 +192,7 @@ footer{text-align:center;color:var(--dim);font-family:'JetBrains Mono',monospace
   <div class="dayhead"><div class="daytitle">Viernes · Upper B</div><span class="tag up">Upper</span></div>
   <div class="focus">Sesgo: Dorsal + Brazos</div>
   <div class="act"><div class="lbl">Activación</div><div class="items">Remo ligero 5'  ·  Band pull-apart 2×20</div></div>
+  <div class="dprog"><div class="bar"><div class="fill" id="f3"></div></div><div class="pct" id="p3">0/0</div><button class="clr" data-clr="l3">Limpiar</button></div>
   <div class="list" id="l3"></div>
   <div class="foot"><b>Progresión:</b> doble progresión. Sem 4 descarga: −1 set · RPE 6-7.</div>
 </section>
@@ -180,6 +200,7 @@ footer{text-align:center;color:var(--dim);font-family:'JetBrains Mono',monospace
   <div class="dayhead"><div class="daytitle">Domingo · Lower B</div><span class="tag lo">Lower</span></div>
   <div class="focus">Sesgo: Cuádriceps + Isquios</div>
   <div class="act"><div class="lbl">Activación</div><div class="items">Bici 5'  ·  Sentadilla peso corporal 2×10  ·  Extensión 1×20 ligero</div></div>
+  <div class="dprog"><div class="bar"><div class="fill" id="f4"></div></div><div class="pct" id="p4">0/0</div><button class="clr" data-clr="l4">Limpiar</button></div>
   <div class="list" id="l4"></div>
   <div class="foot"><b>Progresión:</b> doble progresión. Sem 4 descarga: −1 set · RPE 6-7.</div>
 </section>
@@ -196,7 +217,7 @@ footer{text-align:center;color:var(--dim);font-family:'JetBrains Mono',monospace
     <div class="wk deload"><span class="w">Sem 4</span><span class="ph dl">Descarga</span><span class="desc">−1 set por ejercicio · RPE 6-7</span></div>
   </div>
   <div class="sectitle">Notas</div>
-  <div class="note">Misma estructura y ejercicios las 4 semanas; solo cambia la progresión. La descarga (sem 4) es heurística, no evidencia dura — razonable tras 3 semanas duras. Fuera del plan por decisión: antebrazo, core y trabajo directo de glúteo. Hombro posterior e isquios crecen pero al límite bajo de volumen.</div>
+  <div class="note">Misma estructura y ejercicios las 4 semanas; solo cambia la progresión. La descarga (sem 4) es heurística, no evidencia dura — razonable tras 3 semanas duras. Fuera del plan por decisión: antebrazo, core y trabajo directo de glúteo. Hombro posterior e isquios crecen pero al límite bajo de volumen. Los checks se guardan en este navegador; usa "Limpiar" para reiniciar el día al empezar la semana.</div>
 </section>
 <footer>Hipertrofia general · RPE · Doble progresión</footer>
 </div>
@@ -229,11 +250,15 @@ const data={
   ["Extensión de cuádriceps","","3","15-20","9","75\""],
   ["Gemelo en prensa","","3","12-20","9","60\""]]
 };
+const CHK='✓';
+function key(id,i){return 'plani-julio:'+id+':'+i}
 function render(id){
   const el=document.getElementById(id);
   el.innerHTML=data[id].map((r,i)=>{
     const[name,cue,sets,reps,rpe,rest]=r;
-    return `<div class="ex">
+    const done=localStorage.getItem(key(id,i))==='1';
+    return `<div class="ex${done?' done':''}" data-list="${id}" data-i="${i}">
+      <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="#0c0e12" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
       <div class="name"><span class="n">${String(i+1).padStart(2,'0')}</span>${name}${cue?`<span class="cue">${cue}</span>`:''}</div>
       <div class="stats">
         <span class="st vol"><span class="k">S</span>${sets}</span>
@@ -242,8 +267,41 @@ function render(id){
         <span class="st rest">${rest}</span>
       </div></div>`;
   }).join('');
+  updateProg(id);
+}
+function updateProg(id){
+  const n=id.replace('l','');
+  const total=data[id].length;
+  let done=0;
+  for(let i=0;i<total;i++){if(localStorage.getItem(key(id,i))==='1')done++}
+  const pct=total?Math.round(done/total*100):0;
+  document.getElementById('f'+n).style.width=pct+'%';
+  document.getElementById('p'+n).textContent=done+'/'+total;
 }
 ['l1','l2','l3','l4'].forEach(render);
+
+// toggle on tap
+document.querySelectorAll('.list').forEach(list=>{
+  list.addEventListener('click',e=>{
+    const ex=e.target.closest('.ex'); if(!ex)return;
+    const id=ex.dataset.list, i=ex.dataset.i;
+    const now=ex.classList.toggle('done');
+    if(now)localStorage.setItem(key(id,i),'1');
+    else localStorage.removeItem(key(id,i));
+    updateProg(id);
+  });
+});
+// clear day
+document.querySelectorAll('.clr').forEach(btn=>{
+  btn.addEventListener('click',e=>{
+    e.stopPropagation();
+    const id=btn.dataset.clr;
+    data[id].forEach((_,i)=>localStorage.removeItem(key(id,i)));
+    render(id);
+    // re-bind not needed: list listener is delegated
+  });
+});
+
 const freqs=[["Pecho","2×","Mar · Vie"],["Dorsal","2×","Mar · Vie"],["Cuádriceps","2×","Jue · Dom"],
 ["Bíceps","2×","Mar · Vie"],["Tríceps","2×","Vie + indir."],["Hombro lateral","2×","Mar · Vie"],
 ["Hombro post.","2×","Mar · Vie"],["Isquios","2×","Jue · Dom"],["Gemelo","2×","Jue · Dom"]];
