@@ -101,6 +101,19 @@ nav{position:sticky;top:0;z-index:20;background:rgba(12,14,18,.92);backdrop-filt
 .wk.deload{border-color:#5a4a1f}
 .note{font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:13px;color:var(--dim);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;line-height:1.6}
 footer{text-align:center;color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;margin-top:36px;text-transform:uppercase}
+.ex .name{min-width:0}
+.exctl{grid-column:1/-1;display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:2px;padding-top:10px;border-top:1px solid var(--line)}
+.setctr{display:flex;align-items:center;gap:0;background:#0e1116;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.setctr button{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px;color:var(--mut);background:transparent;border:none;width:30px;height:30px;cursor:pointer;transition:.12s;display:grid;place-items:center}
+.setctr button:hover{color:var(--ink);background:var(--panel2)}
+.setctr .cnt{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12px;color:var(--ink);min-width:42px;text-align:center;padding:0 4px}
+.setctr .cnt.full{color:var(--lo)}
+.wlog{display:flex;align-items:center;gap:6px;background:#0e1116;border:1px solid var(--line);border-radius:8px;padding:0 10px;height:32px}
+.wlog .wk{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:.05em;text-transform:uppercase}
+.wlog input{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;color:var(--ink);background:transparent;border:none;outline:none;width:62px;text-align:right}
+.wlog input::placeholder{color:var(--dim);font-weight:400}
+.wlog .u{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim)}
+.exctl .lbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:700}
 @media(max-width:520px){.ex{grid-template-columns:auto 1fr;gap:11px 12px}.stats{grid-column:2;justify-content:flex-start}.wk{grid-template-columns:1fr auto;gap:8px 12px}.wk .desc{grid-column:1/-1}}
 </style>
 </head>
@@ -198,16 +211,39 @@ const wkMeta={
  s4:["Semana 4","Descarga","−1 set por ejercicio · RPE 6-7 · carga ligera",true]
 };
 function key(w,d,i){return 'plani-julio:'+w+':'+d+':'+i}
+function targetSets(sets){
+  // sets puede ser "3", "2-3", "2-3'"... tomamos el numero mayor del rango como objetivo
+  const m=String(sets).match(/\d+/g);
+  if(!m)return 1;
+  return parseInt(m[m.length-1],10);
+}
+function setsKey(w,d,i){return 'plani-julio:sets:'+w+':'+d+':'+i}
+function wKey(w,d,i){return 'plani-julio:peso:'+w+':'+d+':'+i}
 function renderDay(d){
   const list=document.querySelector('.list[data-day="'+d+'"]');
   const rows=DATA[CURW][d];
   list.innerHTML=rows.map((r,i)=>{
     const[name,cue,sets,reps,rpe,rest]=r;
     const done=localStorage.getItem(key(CURW,d,i))==='1';
+    const tgt=targetSets(sets);
+    let cur=parseInt(localStorage.getItem(setsKey(CURW,d,i))||'0',10);
+    if(done&&cur<tgt)cur=tgt;
+    const peso=localStorage.getItem(wKey(CURW,d,i))||'';
+    const full=cur>=tgt;
     return '<div class="ex'+(done?' done':'')+'" data-i="'+i+'">'+
       '<div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="#0c0e12" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>'+
       '<div class="name"><span class="n">'+String(i+1).padStart(2,'0')+'</span>'+name+(cue?'<span class="cue">'+cue+'</span>':'')+'</div>'+
       '<div class="stats"><span class="st vol"><span class="k">S</span>'+sets+'</span><span class="st vol"><span class="k">R</span>'+reps+'</span><span class="st rpe">RPE '+rpe+'</span><span class="st rest">'+rest+'</span></div>'+
+      '<div class="exctl">'+
+        '<span class="lbl">Series</span>'+
+        '<div class="setctr" data-i="'+i+'">'+
+          '<button type="button" data-act="dec">−</button>'+
+          '<span class="cnt'+(full?' full':'')+'">'+cur+'/'+tgt+'</span>'+
+          '<button type="button" data-act="inc">+</button>'+
+        '</div>'+
+        '<span class="lbl">Peso</span>'+
+        '<div class="wlog"><input type="text" inputmode="decimal" data-i="'+i+'" value="'+peso+'" placeholder="—"><span class="u">kg</span></div>'+
+      '</div>'+
       '</div>';
   }).join('');
   updateProg(d);
@@ -262,12 +298,49 @@ document.getElementById('tabs').addEventListener('click',e=>{
 // toggle checks (delegado)
 document.querySelectorAll('.list').forEach(list=>{
   list.addEventListener('click',e=>{
+    const d=list.dataset.day;
+    // --- contador de series ---
+    const sbtn=e.target.closest('.setctr button');
+    if(sbtn){
+      e.stopPropagation();
+      const ctr=sbtn.closest('.setctr');
+      const i=ctr.dataset.i;
+      const tgt=targetSets(DATA[CURW][d][i][2]);
+      let cur=parseInt(localStorage.getItem(setsKey(CURW,d,i))||'0',10);
+      if(localStorage.getItem(key(CURW,d,i))==='1'&&cur<tgt)cur=tgt;
+      cur+= (sbtn.dataset.act==='inc'?1:-1);
+      if(cur<0)cur=0; if(cur>tgt)cur=tgt;
+      if(cur>0)localStorage.setItem(setsKey(CURW,d,i),String(cur));
+      else localStorage.removeItem(setsKey(CURW,d,i));
+      // sincronizar check: completas series -> hecho; bajas de tgt -> desmarca
+      if(cur>=tgt)localStorage.setItem(key(CURW,d,i),'1');
+      else localStorage.removeItem(key(CURW,d,i));
+      renderDay(d);
+      return;
+    }
+    // --- campo de peso: no togglear nada al tocarlo ---
+    if(e.target.closest('.wlog'))return;
+    // --- check de ejercicio (tap en la fila) ---
     const ex=e.target.closest('.ex');if(!ex)return;
-    const d=list.dataset.day,i=ex.dataset.i;
+    const i=ex.dataset.i;
     const now=ex.classList.toggle('done');
-    if(now)localStorage.setItem(key(CURW,d,i),'1');
-    else localStorage.removeItem(key(CURW,d,i));
-    updateProg(d);
+    const tgt=targetSets(DATA[CURW][d][i][2]);
+    if(now){
+      localStorage.setItem(key(CURW,d,i),'1');
+      localStorage.setItem(setsKey(CURW,d,i),String(tgt)); // marca todas las series
+    }else{
+      localStorage.removeItem(key(CURW,d,i));
+      localStorage.removeItem(setsKey(CURW,d,i)); // resetea series
+    }
+    renderDay(d);
+  });
+  // guardar peso al escribir
+  list.addEventListener('input',e=>{
+    const inp=e.target.closest('.wlog input');if(!inp)return;
+    const d=list.dataset.day,i=inp.dataset.i;
+    const v=inp.value.trim();
+    if(v)localStorage.setItem(wKey(CURW,d,i),v);
+    else localStorage.removeItem(wKey(CURW,d,i));
   });
 });
 // limpiar
@@ -275,7 +348,11 @@ document.querySelectorAll('.clr').forEach(btn=>{
   btn.addEventListener('click',e=>{
     e.stopPropagation();
     const sec=btn.closest('.day'),d=sec.id;
-    DATA[CURW][d].forEach((_,i)=>localStorage.removeItem(key(CURW,d,i)));
+    DATA[CURW][d].forEach((_,i)=>{
+      localStorage.removeItem(key(CURW,d,i));
+      localStorage.removeItem(setsKey(CURW,d,i));
+      localStorage.removeItem(wKey(CURW,d,i));
+    });
     renderDay(d);
   });
 });
