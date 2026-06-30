@@ -16,8 +16,8 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
-body{background:var(--bg);color:var(--ink);font-family:'Archivo',system-ui,sans-serif;line-height:1.5;padding:0 0 80px;background-image:radial-gradient(circle at 20% 0%,#15191f 0,transparent 55%);}
-.wrap{max-width:880px;margin:0 auto;padding:0 16px}
+body{background:var(--bg);color:var(--ink);font-family:'Archivo',system-ui,sans-serif;line-height:1.5;padding:0 0 80px;overflow-x:hidden;background-image:radial-gradient(circle at 20% 0%,#15191f 0,transparent 55%);}
+.wrap{max-width:880px;margin:0 auto;padding:0 16px;overflow-x:hidden}
 header{padding:38px 0 22px;border-bottom:1px solid var(--line)}
 .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);margin-bottom:14px;}
 h1{font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(34px,9vw,62px);line-height:.95;letter-spacing:-.02em;text-transform:uppercase;}
@@ -102,7 +102,7 @@ nav{position:sticky;top:0;z-index:20;background:rgba(12,14,18,.92);backdrop-filt
 .note{font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:13px;color:var(--dim);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;line-height:1.6}
 footer{text-align:center;color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;margin-top:36px;text-transform:uppercase}
 .ex .name{min-width:0}
-.exctl{grid-column:1/-1;display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:2px;padding-top:10px;border-top:1px solid var(--line)}
+.exctl{grid-column:1/-1;display:grid;grid-template-columns:auto 1fr;gap:8px 12px;align-items:center;margin-top:2px;padding-top:10px;border-top:1px solid var(--line)}
 .setctr{display:flex;align-items:center;gap:0;background:#0e1116;border:1px solid var(--line);border-radius:8px;overflow:hidden}
 .setctr button{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px;color:var(--mut);background:transparent;border:none;width:30px;height:30px;cursor:pointer;transition:.12s;display:grid;place-items:center}
 .setctr button:hover{color:var(--ink);background:var(--panel2)}
@@ -114,7 +114,11 @@ footer{text-align:center;color:var(--dim);font-family:'JetBrains Mono',monospace
 .wlog input::placeholder{color:var(--dim);font-weight:400}
 .wlog .u{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim)}
 .exctl .lbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:700}
-@media(max-width:520px){.ex{grid-template-columns:auto 1fr;gap:11px 12px}.stats{grid-column:2;justify-content:flex-start}.wk{grid-template-columns:1fr auto;gap:8px 12px}.wk .desc{grid-column:1/-1}}
+.exctl .setctr,.exctl .wlog{justify-self:start;max-width:100%}
+.ex>*{min-width:0}
+.wlog{max-width:100%}
+.wlog input{max-width:100%}
+@media(max-width:520px){.ex{grid-template-columns:auto 1fr;gap:11px 12px}.stats{grid-column:2;justify-content:flex-start}.exctl{grid-template-columns:auto 1fr}.exctl .wlog{width:100%}.wk{grid-template-columns:1fr auto;gap:8px 12px}.wk .desc{grid-column:1/-1}}
 </style>
 </head>
 <body>
