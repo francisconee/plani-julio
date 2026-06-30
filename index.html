@@ -112,6 +112,10 @@ footer{text-align:center;color:var(--dim);font-family:'JetBrains Mono',monospace
 .wlog .wk{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:.05em;text-transform:uppercase}
 .wlog input{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;color:var(--ink);background:transparent;border:none;outline:none;width:56px;text-align:right;box-sizing:border-box}
 .wlog input::placeholder{color:var(--dim);font-weight:400}
+.wlog .wclr{flex:none;width:18px;height:18px;border:none;background:transparent;color:var(--dim);cursor:pointer;display:none;place-items:center;padding:0;border-radius:50%;transition:.12s}
+.wlog.has .wclr{display:grid}
+.wlog .wclr:hover{color:var(--rpe);background:#1c1311}
+.wlog .wclr svg{width:12px;height:12px}
 .wlog .u{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim)}
 .exctl .lbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:700}
 .exctl .setctr,.exctl .wlog{justify-self:start}
@@ -246,7 +250,7 @@ function renderDay(d){
           '<button type="button" data-act="inc">+</button>'+
         '</div>'+
         '<span class="lbl">Peso</span>'+
-        '<div class="wlog"><input type="text" inputmode="decimal" data-i="'+i+'" value="'+peso+'" placeholder="—"><span class="u">kg</span></div>'+
+        '<div class="wlog'+(peso?' has':'')+'"><input type="text" inputmode="decimal" data-i="'+i+'" value="'+peso+'" placeholder="—"><span class="u">kg</span><button type="button" class="wclr" data-i="'+i+'" aria-label="Limpiar peso"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>'+
       '</div>'+
       '</div>';
   }).join('');
@@ -303,6 +307,18 @@ document.getElementById('tabs').addEventListener('click',e=>{
 document.querySelectorAll('.list').forEach(list=>{
   list.addEventListener('click',e=>{
     const d=list.dataset.day;
+    // --- limpiar peso (X) ---
+    const wclr=e.target.closest('.wclr');
+    if(wclr){
+      e.stopPropagation();
+      const i=wclr.dataset.i;
+      localStorage.removeItem(wKey(CURW,d,i));
+      const wl=wclr.closest('.wlog');
+      const inp=wl.querySelector('input');
+      inp.value='';
+      wl.classList.remove('has');
+      return;
+    }
     // --- contador de series ---
     const sbtn=e.target.closest('.setctr button');
     if(sbtn){
@@ -345,6 +361,7 @@ document.querySelectorAll('.list').forEach(list=>{
     const v=inp.value.trim();
     if(v)localStorage.setItem(wKey(CURW,d,i),v);
     else localStorage.removeItem(wKey(CURW,d,i));
+    inp.closest('.wlog').classList.toggle('has',!!v);
   });
 });
 // limpiar
