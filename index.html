@@ -16,88 +16,59 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
-body{
-  background:var(--bg); color:var(--ink);
-  font-family:'Archivo',system-ui,sans-serif;
-  line-height:1.5; padding:0 0 80px;
-  background-image:radial-gradient(circle at 20% 0%,#15191f 0,transparent 55%);
-}
+body{background:var(--bg);color:var(--ink);font-family:'Archivo',system-ui,sans-serif;line-height:1.5;padding:0 0 80px;background-image:radial-gradient(circle at 20% 0%,#15191f 0,transparent 55%);}
 .wrap{max-width:880px;margin:0 auto;padding:0 16px}
 header{padding:38px 0 22px;border-bottom:1px solid var(--line)}
-.eyebrow{
-  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.32em;
-  text-transform:uppercase;color:var(--dim);margin-bottom:14px;
-}
-h1{
-  font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(34px,9vw,62px);
-  line-height:.95;letter-spacing:-.02em;text-transform:uppercase;
-}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim);margin-bottom:14px;}
+h1{font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(34px,9vw,62px);line-height:.95;letter-spacing:-.02em;text-transform:uppercase;}
 h1 .x{color:var(--up)}
-.sub{
-  margin-top:14px;color:var(--mut);font-size:14px;max-width:46ch;
-  font-family:'Archivo Narrow',sans-serif;font-weight:600;letter-spacing:.01em;
-}
+.sub{margin-top:14px;color:var(--mut);font-size:14px;max-width:46ch;font-family:'Archivo Narrow',sans-serif;font-weight:600;letter-spacing:.01em;}
 .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
-.chip{
-  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.05em;
-  color:var(--mut);border:1px solid var(--line);border-radius:99px;
-  padding:5px 12px;background:var(--panel);
-}
+.chip{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.05em;color:var(--mut);border:1px solid var(--line);border-radius:99px;padding:5px 12px;background:var(--panel);}
 .chip b{color:var(--ink);font-weight:700}
-nav{position:sticky;top:0;z-index:20;background:rgba(12,14,18,.92);
-  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);margin-top:0}
+/* week tabs */
+.wtabs{display:flex;gap:6px;max-width:880px;margin:0 auto;padding:16px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.wtab{flex:0 0 auto;font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--mut);background:transparent;border:1px solid var(--line);padding:9px 18px;border-radius:99px;cursor:pointer;white-space:nowrap;transition:.15s;}
+.wtab:hover{color:var(--ink);border-color:#333a47}
+.wtab.on{color:#fff;background:var(--up);border-color:var(--up)}
+.wtab[data-w=s4].on{background:var(--act);border-color:var(--act);color:#0c0e12}
+.wtab[data-w=sum].on{background:var(--lo);border-color:var(--lo);color:#06281f}
+/* day tabs */
+nav{position:sticky;top:0;z-index:20;background:rgba(12,14,18,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
 .tabs{display:flex;gap:4px;max-width:880px;margin:0 auto;padding:10px 12px;overflow-x:auto;-webkit-overflow-scrolling:touch}
-.tab{
-  flex:0 0 auto;font-family:'Archivo Narrow',sans-serif;font-weight:700;
-  font-size:13px;letter-spacing:.04em;text-transform:uppercase;
-  color:var(--mut);background:transparent;border:1px solid transparent;
-  padding:8px 14px;border-radius:8px;cursor:pointer;white-space:nowrap;
-  transition:.15s;display:flex;align-items:center;gap:7px;
-}
+.tab{flex:0 0 auto;font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--mut);background:transparent;border:1px solid transparent;padding:8px 14px;border-radius:8px;cursor:pointer;white-space:nowrap;transition:.15s;display:flex;align-items:center;gap:7px;}
 .tab .dot{width:7px;height:7px;border-radius:99px;background:var(--dim)}
 .tab[data-k=up] .dot{background:var(--up)}
 .tab[data-k=lo] .dot{background:var(--lo)}
-.tab[data-k=sum] .dot{background:var(--act)}
 .tab:hover{color:var(--ink);background:var(--panel)}
 .tab.on{color:var(--ink);background:var(--panel2);border-color:var(--line)}
-.day{display:none;padding-top:26px;animation:fade .25s ease}
+.wkintro{padding:24px 0 4px}
+.wkintro .ph{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--up)}
+.wkintro .ph.dl{color:var(--act)}
+.wkintro h2{font-weight:900;font-size:clamp(22px,5vw,32px);letter-spacing:-.01em;text-transform:uppercase;margin-top:4px}
+.wkintro p{color:var(--mut);font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:14px;margin-top:6px}
+.day{display:none;padding-top:20px;animation:fade .25s ease}
 .day.on{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .dayhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
-.daytitle{font-weight:900;font-size:clamp(22px,5vw,30px);letter-spacing:-.01em;text-transform:uppercase}
-.tag{
-  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
-  letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:6px;
-}
+.daytitle{font-weight:900;font-size:clamp(20px,5vw,28px);letter-spacing:-.01em;text-transform:uppercase}
+.tag{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:6px;}
 .tag.up{color:#bcd6ff;background:var(--up-soft)}
 .tag.lo{color:#a7f0d8;background:var(--lo-soft)}
-.focus{color:var(--mut);font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:15px;margin-bottom:20px}
-.act{
-  border-left:3px solid var(--act);background:linear-gradient(90deg,rgba(245,185,66,.07),transparent);
-  border-radius:0 10px 10px 0;padding:12px 16px;margin-bottom:22px;
-}
-.act .lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--act);margin-bottom:6px;font-weight:700}
+.focus{color:var(--mut);font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:15px;margin-bottom:18px}
+.act{border-left:3px solid var(--act);background:linear-gradient(90deg,rgba(245,185,66,.07),transparent);border-radius:0 10px 10px 0;padding:12px 16px;margin-bottom:18px;}
+.act .lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--act);margin-bottom:6px;font-weight:700}
 .act .items{color:var(--mut);font-size:14px;font-family:'Archivo Narrow',sans-serif;font-weight:600}
-/* progress bar per day */
 .dprog{display:flex;align-items:center;gap:12px;margin-bottom:16px}
 .dprog .bar{flex:1;height:6px;background:var(--panel2);border:1px solid var(--line);border-radius:99px;overflow:hidden}
 .dprog .fill{height:100%;width:0;background:linear-gradient(90deg,var(--lo),#34d399);transition:width .3s ease}
-.dprog .pct{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--mut);min-width:64px;text-align:right}
-.dprog .clr{font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--dim);background:transparent;border:1px solid var(--line);border-radius:6px;padding:5px 10px;cursor:pointer;transition:.15s}
+.dprog .pct{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--mut);min-width:54px;text-align:right}
+.dprog .clr{font-family:'Archivo Narrow',sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);background:transparent;border:1px solid var(--line);border-radius:6px;padding:5px 10px;cursor:pointer;transition:.15s}
 .dprog .clr:hover{color:var(--ink);border-color:#333a47}
 .list{display:flex;flex-direction:column;gap:8px}
-.ex{
-  display:grid;grid-template-columns:auto 1fr auto;gap:10px 14px;align-items:center;
-  background:var(--panel);border:1px solid var(--line);border-radius:12px;
-  padding:14px 16px;transition:.15s;cursor:pointer;
-}
+.ex{display:grid;grid-template-columns:auto 1fr auto;gap:10px 14px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;transition:.15s;cursor:pointer;}
 .ex:hover{border-color:#333a47;background:var(--panel2)}
-.ex .chk{
-  width:24px;height:24px;border:2px solid var(--dim);border-radius:7px;flex:none;
-  display:grid;place-items:center;transition:.15s;background:transparent;
-}
+.ex .chk{width:24px;height:24px;border:2px solid var(--dim);border-radius:7px;flex:none;display:grid;place-items:center;transition:.15s;background:transparent;}
 .ex .chk svg{width:14px;height:14px;opacity:0;transform:scale(.5);transition:.15s}
 .ex.done .chk{background:var(--lo);border-color:var(--lo)}
 .ex.done .chk svg{opacity:1;transform:scale(1)}
@@ -107,215 +78,213 @@ nav{position:sticky;top:0;z-index:20;background:rgba(12,14,18,.92);
 .ex .name{font-weight:700;font-size:15px;letter-spacing:-.01em;display:flex;gap:9px;align-items:baseline;flex-wrap:wrap}
 .ex .cue{font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:12.5px;color:var(--dim)}
 .stats{display:flex;gap:7px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
-.st{
-  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;
-  background:#0e1116;border:1px solid var(--line);border-radius:6px;padding:5px 9px;
-  color:var(--ink);white-space:nowrap;
-}
+.st{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;background:#0e1116;border:1px solid var(--line);border-radius:6px;padding:5px 9px;color:var(--ink);white-space:nowrap;}
 .st.vol{color:#cfd6e0}
 .st.rpe{color:var(--rpe);border-color:#4a2a28;background:#1c1311;font-weight:700}
 .st.rest{color:var(--mut)}
 .st .k{color:var(--dim);font-weight:400;margin-right:4px}
-.foot{margin-top:18px;font-family:'Archivo Narrow',sans-serif;font-weight:600;
-  font-size:13px;color:var(--dim);border-top:1px dashed var(--line);padding-top:14px}
+.foot{margin-top:18px;font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:13px;color:var(--dim);border-top:1px dashed var(--line);padding-top:14px}
 .foot b{color:var(--mut)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:28px}
 .fcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
 .fcard .g{font-weight:700;font-size:14px;margin-bottom:3px}
 .fcard .f{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;color:var(--lo)}
 .fcard .d{font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:12px;color:var(--dim);margin-top:5px}
-.sectitle{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--mut);margin:0 0 14px;font-weight:700;
-  display:flex;align-items:center;gap:10px}
+.sectitle{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mut);margin:0 0 14px;font-weight:700;display:flex;align-items:center;gap:10px}
 .sectitle::after{content:"";flex:1;height:1px;background:var(--line)}
 .prog{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
-.wk{display:grid;grid-template-columns:auto auto 1fr;gap:14px;align-items:center;
-  background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 16px}
+.wk{display:grid;grid-template-columns:auto auto 1fr;gap:14px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 16px}
 .wk .w{font-family:'Archivo',sans-serif;font-weight:900;font-size:15px;min-width:70px}
-.wk .ph{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;
-  text-transform:uppercase;padding:3px 9px;border-radius:5px;color:var(--up);background:var(--up-soft)}
+.wk .ph{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:5px;color:var(--up);background:var(--up-soft)}
 .wk .ph.dl{color:var(--act);background:rgba(245,185,66,.13)}
 .wk .desc{color:var(--mut);font-size:13.5px;font-family:'Archivo Narrow',sans-serif;font-weight:600}
 .wk.deload{border-color:#5a4a1f}
-.note{font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:13px;color:var(--dim);
-  background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;line-height:1.6}
-footer{text-align:center;color:var(--dim);font-family:'JetBrains Mono',monospace;
-  font-size:10px;letter-spacing:.15em;margin-top:36px;text-transform:uppercase}
-@media(max-width:520px){
-  .ex{grid-template-columns:auto 1fr;gap:11px 12px}
-  .stats{grid-column:2;justify-content:flex-start}
-  .wk{grid-template-columns:1fr auto;gap:8px 12px}
-  .wk .desc{grid-column:1/-1}
-}
+.note{font-family:'Archivo Narrow',sans-serif;font-weight:600;font-size:13px;color:var(--dim);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;line-height:1.6}
+footer{text-align:center;color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;margin-top:36px;text-transform:uppercase}
+@media(max-width:520px){.ex{grid-template-columns:auto 1fr;gap:11px 12px}.stats{grid-column:2;justify-content:flex-start}.wk{grid-template-columns:1fr auto;gap:8px 12px}.wk .desc{grid-column:1/-1}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
   <div class="eyebrow">Plan mensual · 4 semanas</div>
-  <h1>Full Body <span class="x">×4</span></h1>
+  <h1>Full Body <span class="x">x4</span></h1>
   <p class="sub">Upper / Lower repartido en cuatro días. Sesgo a pecho, dorsal, brazos y cuádriceps. Hipertrofia general por volumen efectivo y RPE.</p>
   <div class="meta">
     <span class="chip">Días <b>Mar · Jue · Vie · Dom</b></span>
-    <span class="chip">Frecuencia <b>2× todo</b></span>
+    <span class="chip">Frecuencia <b>2x todo</b></span>
     <span class="chip">Progresión <b>Doble</b></span>
   </div>
 </header>
 </div>
-<nav>
-  <div class="tabs" id="tabs">
-    <button class="tab on" data-k="up" data-t="d1"><span class="dot"></span>Martes</button>
-    <button class="tab" data-k="lo" data-t="d2"><span class="dot"></span>Jueves</button>
-    <button class="tab" data-k="up" data-t="d3"><span class="dot"></span>Viernes</button>
-    <button class="tab" data-k="lo" data-t="d4"><span class="dot"></span>Domingo</button>
-    <button class="tab" data-k="sum" data-t="sum"><span class="dot"></span>Resumen</button>
-  </div>
-</nav>
+
+<div class="wrap"><div class="wtabs" id="wtabs">
+  <button class="wtab on" data-w="s1">Sem 1</button>
+  <button class="wtab" data-w="s2">Sem 2</button>
+  <button class="wtab" data-w="s3">Sem 3</button>
+  <button class="wtab" data-w="s4">Sem 4</button>
+  <button class="wtab" data-w="sum">Resumen</button>
+</div></div>
+
+<nav id="daynav"><div class="tabs" id="tabs">
+  <button class="tab on" data-k="up" data-t="l1"><span class="dot"></span>Martes</button>
+  <button class="tab" data-k="lo" data-t="l2"><span class="dot"></span>Jueves</button>
+  <button class="tab" data-k="up" data-t="l3"><span class="dot"></span>Viernes</button>
+  <button class="tab" data-k="lo" data-t="l4"><span class="dot"></span>Domingo</button>
+</div></nav>
+
 <div class="wrap">
-<section class="day on" id="d1">
-  <div class="dayhead"><div class="daytitle">Martes · Upper A</div><span class="tag up">Upper</span></div>
-  <div class="focus">Sesgo: Pecho + Dorsal</div>
-  <div class="act"><div class="lbl">Activación</div><div class="items">Bici 5'  ·  Band pull-apart 2×20  ·  Chest press técnico 1×15</div></div>
-  <div class="dprog"><div class="bar"><div class="fill" id="f1"></div></div><div class="pct" id="p1">0/0</div><button class="clr" data-clr="l1">Limpiar</button></div>
-  <div class="list" id="l1"></div>
-  <div class="foot"><b>Progresión:</b> doble progresión — subir reps dentro del rango, luego carga. Sem 4 descarga: −1 set · RPE 6-7.</div>
-</section>
-<section class="day" id="d2">
-  <div class="dayhead"><div class="daytitle">Jueves · Lower A</div><span class="tag lo">Lower</span></div>
-  <div class="focus">Sesgo: Cuádriceps</div>
-  <div class="act"><div class="lbl">Activación</div><div class="items">Bici 5'  ·  Extensión cuádriceps 1×20 ligero</div></div>
-  <div class="dprog"><div class="bar"><div class="fill" id="f2"></div></div><div class="pct" id="p2">0/0</div><button class="clr" data-clr="l2">Limpiar</button></div>
-  <div class="list" id="l2"></div>
-  <div class="foot"><b>Progresión:</b> doble progresión. Sem 4 descarga: −1 set · RPE 6-7.</div>
-</section>
-<section class="day" id="d3">
-  <div class="dayhead"><div class="daytitle">Viernes · Upper B</div><span class="tag up">Upper</span></div>
-  <div class="focus">Sesgo: Dorsal + Brazos</div>
-  <div class="act"><div class="lbl">Activación</div><div class="items">Remo ligero 5'  ·  Band pull-apart 2×20</div></div>
-  <div class="dprog"><div class="bar"><div class="fill" id="f3"></div></div><div class="pct" id="p3">0/0</div><button class="clr" data-clr="l3">Limpiar</button></div>
-  <div class="list" id="l3"></div>
-  <div class="foot"><b>Progresión:</b> doble progresión. Sem 4 descarga: −1 set · RPE 6-7.</div>
-</section>
-<section class="day" id="d4">
-  <div class="dayhead"><div class="daytitle">Domingo · Lower B</div><span class="tag lo">Lower</span></div>
-  <div class="focus">Sesgo: Cuádriceps + Isquios</div>
-  <div class="act"><div class="lbl">Activación</div><div class="items">Bici 5'  ·  Sentadilla peso corporal 2×10  ·  Extensión 1×20 ligero</div></div>
-  <div class="dprog"><div class="bar"><div class="fill" id="f4"></div></div><div class="pct" id="p4">0/0</div><button class="clr" data-clr="l4">Limpiar</button></div>
-  <div class="list" id="l4"></div>
-  <div class="foot"><b>Progresión:</b> doble progresión. Sem 4 descarga: −1 set · RPE 6-7.</div>
-</section>
-<section class="day" id="sum">
-  <div class="dayhead"><div class="daytitle">Resumen</div><span class="tag" style="color:var(--act);background:rgba(245,185,66,.13)">Mes</span></div>
-  <div class="focus">Frecuencias, progresión y notas</div>
-  <div class="sectitle">Frecuencia semanal</div>
-  <div class="grid" id="freq"></div>
-  <div class="sectitle">Progresión · 4 semanas</div>
-  <div class="prog">
-    <div class="wk"><span class="w">Sem 1</span><span class="ph">Acumular</span><span class="desc">Piso del rango de reps · RPE 8 real</span></div>
-    <div class="wk"><span class="w">Sem 2</span><span class="ph">Acumular</span><span class="desc">Subir reps dentro del rango · misma carga</span></div>
-    <div class="wk"><span class="w">Sem 3</span><span class="ph">Acumular</span><span class="desc">Techo del rango · al superarlo, subir carga</span></div>
-    <div class="wk deload"><span class="w">Sem 4</span><span class="ph dl">Descarga</span><span class="desc">−1 set por ejercicio · RPE 6-7</span></div>
-  </div>
-  <div class="sectitle">Notas</div>
-  <div class="note">Misma estructura y ejercicios las 4 semanas; solo cambia la progresión. La descarga (sem 4) es heurística, no evidencia dura — razonable tras 3 semanas duras. Fuera del plan por decisión: antebrazo, core y trabajo directo de glúteo. Hombro posterior e isquios crecen pero al límite bajo de volumen. Los checks se guardan en este navegador; usa "Limpiar" para reiniciar el día al empezar la semana.</div>
-</section>
-<footer>Hipertrofia general · RPE · Doble progresión</footer>
+  <div class="wkintro" id="wkintro"></div>
+
+  <section class="day on" id="l1">
+    <div class="dayhead"><div class="daytitle">Martes · Upper A</div><span class="tag up">Upper</span></div>
+    <div class="focus">Sesgo: Pecho + Dorsal</div>
+    <div class="act"><div class="lbl">Activación</div><div class="items">Bici 5'  ·  Band pull-apart 2x20  ·  Chest press técnico 1x15</div></div>
+    <div class="dprog"><div class="bar"><div class="fill"></div></div><div class="pct">0/0</div><button class="clr" type="button">Limpiar</button></div>
+    <div class="list" data-day="l1"></div>
+    <div class="foot"><b>Progresión:</b> doble progresión — subir reps dentro del rango, luego carga. Sem 4 descarga: −1 set · RPE 6-7.</div>
+  </section>
+  <section class="day" id="l2">
+    <div class="dayhead"><div class="daytitle">Jueves · Lower A</div><span class="tag lo">Lower</span></div>
+    <div class="focus">Sesgo: Cuádriceps</div>
+    <div class="act"><div class="lbl">Activación</div><div class="items">Bici 5'  ·  Extensión cuádriceps 1x20 ligero</div></div>
+    <div class="dprog"><div class="bar"><div class="fill"></div></div><div class="pct">0/0</div><button class="clr" type="button">Limpiar</button></div>
+    <div class="list" data-day="l2"></div>
+    <div class="foot"><b>Progresión:</b> doble progresión. Sem 4 descarga: −1 set · RPE 6-7.</div>
+  </section>
+  <section class="day" id="l3">
+    <div class="dayhead"><div class="daytitle">Viernes · Upper B</div><span class="tag up">Upper</span></div>
+    <div class="focus">Sesgo: Dorsal + Brazos</div>
+    <div class="act"><div class="lbl">Activación</div><div class="items">Remo ligero 5'  ·  Band pull-apart 2x20</div></div>
+    <div class="dprog"><div class="bar"><div class="fill"></div></div><div class="pct">0/0</div><button class="clr" type="button">Limpiar</button></div>
+    <div class="list" data-day="l3"></div>
+    <div class="foot"><b>Progresión:</b> doble progresión. Sem 4 descarga: −1 set · RPE 6-7.</div>
+  </section>
+  <section class="day" id="l4">
+    <div class="dayhead"><div class="daytitle">Domingo · Lower B</div><span class="tag lo">Lower</span></div>
+    <div class="focus">Sesgo: Cuádriceps + Isquios</div>
+    <div class="act"><div class="lbl">Activación</div><div class="items">Bici 5'  ·  Sentadilla peso corporal 2x10  ·  Extensión 1x20 ligero</div></div>
+    <div class="dprog"><div class="bar"><div class="fill"></div></div><div class="pct">0/0</div><button class="clr" type="button">Limpiar</button></div>
+    <div class="list" data-day="l4"></div>
+    <div class="foot"><b>Progresión:</b> doble progresión. Sem 4 descarga: −1 set · RPE 6-7.</div>
+  </section>
+
+  <section class="day" id="sum">
+    <div class="dayhead"><div class="daytitle">Resumen</div><span class="tag" style="color:var(--lo);background:var(--lo-soft)">Mes</span></div>
+    <div class="focus">Frecuencias, progresión y notas</div>
+    <div class="sectitle">Frecuencia semanal</div>
+    <div class="grid" id="freq"></div>
+    <div class="sectitle">Progresión · 4 semanas</div>
+    <div class="prog">
+      <div class="wk"><span class="w">Sem 1</span><span class="ph">Acumular</span><span class="desc">Piso del rango de reps · RPE 8 real</span></div>
+      <div class="wk"><span class="w">Sem 2</span><span class="ph">Acumular</span><span class="desc">Subir reps dentro del rango · misma carga</span></div>
+      <div class="wk"><span class="w">Sem 3</span><span class="ph">Acumular</span><span class="desc">Techo del rango · al superarlo, subir carga</span></div>
+      <div class="wk deload"><span class="w">Sem 4</span><span class="ph dl">Descarga</span><span class="desc">−1 set por ejercicio · RPE 6-7</span></div>
+    </div>
+    <div class="sectitle">Notas</div>
+    <div class="note">Misma estructura y ejercicios las 4 semanas; solo cambia la progresión (reps→carga) con RPE estable, y la descarga en sem 4. La descarga es heurística, no evidencia dura — razonable tras 3 semanas duras. Fuera del plan por decisión: antebrazo, core y trabajo directo de glúteo. Hombro posterior e isquios al límite bajo de volumen. Los checks se guardan en este navegador, independientes por semana; usa "Limpiar" para reiniciar un día.</div>
+  </section>
 </div>
+<footer>Hipertrofia general · RPE · Doble progresión</footer>
+
 <script>
-const data={
- l1:[
-  ["Chest press máquina","","3","8-10","8","2'"],
-  ["Remo máquina pecho apoyado","","3","8-10","8","2'"],
-  ["Jalón al pecho agarre neutro","","3","10-12","8","2'"],
-  ["Pec deck","","3","12-15","9","90\""],
-  ["Curl bíceps mancuerna inclinado","","3","10-12","9","75\""],
-  ["Elevación lateral polea","","2-3","12-20","9","60\""],
-  ["Pájaro en polea","cruzado","3","15-20","9","60\""]],
- l2:[
-  ["Prensa 45°","stance estrecho · pie medio-bajo","3","8-10","8","2-3'"],
-  ["Extensión de cuádriceps","","3","12-15","9","90\""],
-  ["Curl femoral acostado","","3","10-12","9","90\""],
-  ["Gemelo en prensa","","3","12-20","9","60\""]],
- l3:[
-  ["Jalón agarre ancho","","3","8-10","8","2'"],
-  ["Chest press inclinado máquina","","3","8-10","8","2'"],
-  ["Remo polea baja agarre estrecho","","3","10-12","8","2'"],
-  ["Press de hombro en máquina","","3","8-12","8","2'"],
-  ["Press francés polea o EZ","","3","10-12","9","75\""],
-  ["Curl predicador máquina","","2-3","12-15","9","75\""],
-  ["Face pull polea","","3","15-20","9","60\""]],
- l4:[
-  ["Prensa horizontal sentada","stance estrecho · sesgo cuádriceps","3","8-10","8","2-3'"],
-  ["Curl femoral sentado","","3","12-15","9","90\""],
-  ["Extensión de cuádriceps","","3","15-20","9","75\""],
-  ["Gemelo en prensa","","3","12-20","9","60\""]]
+const DATA={"s1": {"l1": [["Chest press máquina", "", "3", "8-10", "8", "2'"], ["Remo máquina pecho apoyado", "", "3", "8-10", "8", "2'"], ["Jalón al pecho agarre neutro", "", "3", "10-12", "8", "2'"], ["Pec deck", "", "3", "12-15", "9", "90\""], ["Curl bíceps mancuerna inclinado", "", "3", "10-12", "9", "75\""], ["Elevación lateral polea", "", "2-3", "12-20", "9", "60\""], ["Pájaro en polea", "cruzado", "3", "15-20", "9", "60\""]], "l2": [["Prensa 45°", "stance estrecho · pie medio-bajo", "3", "8-10", "8", "2-3'"], ["Extensión de cuádriceps", "", "3", "12-15", "9", "90\""], ["Curl femoral acostado", "", "3", "10-12", "9", "90\""], ["Gemelo en prensa", "", "3", "12-20", "9", "60\""]], "l3": [["Jalón agarre ancho", "", "3", "8-10", "8", "2'"], ["Chest press inclinado máquina", "", "3", "8-10", "8", "2'"], ["Remo polea baja agarre estrecho", "", "3", "10-12", "8", "2'"], ["Press de hombro en máquina", "", "3", "8-12", "8", "2'"], ["Press francés polea o EZ", "", "3", "10-12", "9", "75\""], ["Curl predicador máquina", "", "2-3", "12-15", "9", "75\""], ["Face pull polea", "", "3", "15-20", "9", "60\""]], "l4": [["Prensa horizontal sentada", "stance estrecho · sesgo cuádriceps", "3", "8-10", "8", "2-3'"], ["Curl femoral sentado", "", "3", "12-15", "9", "90\""], ["Extensión de cuádriceps", "", "3", "15-20", "9", "75\""], ["Gemelo en prensa", "", "3", "12-20", "9", "60\""]]}, "s2": {"l1": [["Chest press máquina", "subir reps mismo rango", "3", "8-10", "8", "2'"], ["Remo máquina pecho apoyado", "subir reps mismo rango", "3", "8-10", "8", "2'"], ["Jalón al pecho agarre neutro", "subir reps mismo rango", "3", "10-12", "8", "2'"], ["Pec deck", "subir reps mismo rango", "3", "12-15", "9", "90\""], ["Curl bíceps mancuerna inclinado", "subir reps mismo rango", "3", "10-12", "9", "75\""], ["Elevación lateral polea", "subir reps mismo rango", "2-3", "12-20", "9", "60\""], ["Pájaro en polea", "cruzado · subir reps mismo rango", "3", "15-20", "9", "60\""]], "l2": [["Prensa 45°", "stance estrecho · pie medio-bajo · subir reps mismo rango", "3", "8-10", "8", "2-3'"], ["Extensión de cuádriceps", "subir reps mismo rango", "3", "12-15", "9", "90\""], ["Curl femoral acostado", "subir reps mismo rango", "3", "10-12", "9", "90\""], ["Gemelo en prensa", "subir reps mismo rango", "3", "12-20", "9", "60\""]], "l3": [["Jalón agarre ancho", "subir reps mismo rango", "3", "8-10", "8", "2'"], ["Chest press inclinado máquina", "subir reps mismo rango", "3", "8-10", "8", "2'"], ["Remo polea baja agarre estrecho", "subir reps mismo rango", "3", "10-12", "8", "2'"], ["Press de hombro en máquina", "subir reps mismo rango", "3", "8-12", "8", "2'"], ["Press francés polea o EZ", "subir reps mismo rango", "3", "10-12", "9", "75\""], ["Curl predicador máquina", "subir reps mismo rango", "2-3", "12-15", "9", "75\""], ["Face pull polea", "subir reps mismo rango", "3", "15-20", "9", "60\""]], "l4": [["Prensa horizontal sentada", "stance estrecho · sesgo cuádriceps · subir reps mismo rango", "3", "8-10", "8", "2-3'"], ["Curl femoral sentado", "subir reps mismo rango", "3", "12-15", "9", "90\""], ["Extensión de cuádriceps", "subir reps mismo rango", "3", "15-20", "9", "75\""], ["Gemelo en prensa", "subir reps mismo rango", "3", "12-20", "9", "60\""]]}, "s3": {"l1": [["Chest press máquina", "techo del rango → +carga", "3", "8-10", "8", "2'"], ["Remo máquina pecho apoyado", "techo del rango → +carga", "3", "8-10", "8", "2'"], ["Jalón al pecho agarre neutro", "techo del rango → +carga", "3", "10-12", "8", "2'"], ["Pec deck", "techo del rango → +carga", "3", "12-15", "9", "90\""], ["Curl bíceps mancuerna inclinado", "techo del rango → +carga", "3", "10-12", "9", "75\""], ["Elevación lateral polea", "techo del rango → +carga", "2-3", "12-20", "9", "60\""], ["Pájaro en polea", "cruzado · techo del rango → +carga", "3", "15-20", "9", "60\""]], "l2": [["Prensa 45°", "stance estrecho · pie medio-bajo · techo del rango → +carga", "3", "8-10", "8", "2-3'"], ["Extensión de cuádriceps", "techo del rango → +carga", "3", "12-15", "9", "90\""], ["Curl femoral acostado", "techo del rango → +carga", "3", "10-12", "9", "90\""], ["Gemelo en prensa", "techo del rango → +carga", "3", "12-20", "9", "60\""]], "l3": [["Jalón agarre ancho", "techo del rango → +carga", "3", "8-10", "8", "2'"], ["Chest press inclinado máquina", "techo del rango → +carga", "3", "8-10", "8", "2'"], ["Remo polea baja agarre estrecho", "techo del rango → +carga", "3", "10-12", "8", "2'"], ["Press de hombro en máquina", "techo del rango → +carga", "3", "8-12", "8", "2'"], ["Press francés polea o EZ", "techo del rango → +carga", "3", "10-12", "9", "75\""], ["Curl predicador máquina", "techo del rango → +carga", "2-3", "12-15", "9", "75\""], ["Face pull polea", "techo del rango → +carga", "3", "15-20", "9", "60\""]], "l4": [["Prensa horizontal sentada", "stance estrecho · sesgo cuádriceps · techo del rango → +carga", "3", "8-10", "8", "2-3'"], ["Curl femoral sentado", "techo del rango → +carga", "3", "12-15", "9", "90\""], ["Extensión de cuádriceps", "techo del rango → +carga", "3", "15-20", "9", "75\""], ["Gemelo en prensa", "techo del rango → +carga", "3", "12-20", "9", "60\""]]}, "s4": {"l1": [["Chest press máquina", "carga ligera", "2", "8-10", "6-7", "2'"], ["Remo máquina pecho apoyado", "carga ligera", "2", "8-10", "6-7", "2'"], ["Jalón al pecho agarre neutro", "carga ligera", "2", "10-12", "6-7", "2'"], ["Pec deck", "carga ligera", "2", "12-15", "6-7", "90\""], ["Curl bíceps mancuerna inclinado", "carga ligera", "2", "10-12", "6-7", "75\""], ["Elevación lateral polea", "carga ligera", "1-2", "12-20", "6-7", "60\""], ["Pájaro en polea", "cruzado · carga ligera", "2", "15-20", "6-7", "60\""]], "l2": [["Prensa 45°", "stance estrecho · pie medio-bajo · carga ligera", "2", "8-10", "6-7", "2-3'"], ["Extensión de cuádriceps", "carga ligera", "2", "12-15", "6-7", "90\""], ["Curl femoral acostado", "carga ligera", "2", "10-12", "6-7", "90\""], ["Gemelo en prensa", "carga ligera", "2", "12-20", "6-7", "60\""]], "l3": [["Jalón agarre ancho", "carga ligera", "2", "8-10", "6-7", "2'"], ["Chest press inclinado máquina", "carga ligera", "2", "8-10", "6-7", "2'"], ["Remo polea baja agarre estrecho", "carga ligera", "2", "10-12", "6-7", "2'"], ["Press de hombro en máquina", "carga ligera", "2", "8-12", "6-7", "2'"], ["Press francés polea o EZ", "carga ligera", "2", "10-12", "6-7", "75\""], ["Curl predicador máquina", "carga ligera", "1-2", "12-15", "6-7", "75\""], ["Face pull polea", "carga ligera", "2", "15-20", "6-7", "60\""]], "l4": [["Prensa horizontal sentada", "stance estrecho · sesgo cuádriceps · carga ligera", "2", "8-10", "6-7", "2-3'"], ["Curl femoral sentado", "carga ligera", "2", "12-15", "6-7", "90\""], ["Extensión de cuádriceps", "carga ligera", "2", "15-20", "6-7", "75\""], ["Gemelo en prensa", "carga ligera", "2", "12-20", "6-7", "60\""]]}};
+let CURW='s1';
+const dayMeta={l1:["Martes · Upper A"],l2:["Jueves · Lower A"],l3:["Viernes · Upper B"],l4:["Domingo · Lower B"]};
+const wkMeta={
+ s1:["Semana 1","Acumular","Piso del rango de reps · RPE real (2 RIR)",false],
+ s2:["Semana 2","Acumular","Subir reps dentro del rango · misma carga",false],
+ s3:["Semana 3","Acumular","Techo del rango · al superarlo, subir carga",false],
+ s4:["Semana 4","Descarga","−1 set por ejercicio · RPE 6-7 · carga ligera",true]
 };
-const CHK='✓';
-function key(id,i){return 'plani-julio:'+id+':'+i}
-function render(id){
-  const el=document.getElementById(id);
-  el.innerHTML=data[id].map((r,i)=>{
+function key(w,d,i){return 'plani-julio:'+w+':'+d+':'+i}
+function renderDay(d){
+  const list=document.querySelector('.list[data-day="'+d+'"]');
+  const rows=DATA[CURW][d];
+  list.innerHTML=rows.map((r,i)=>{
     const[name,cue,sets,reps,rpe,rest]=r;
-    const done=localStorage.getItem(key(id,i))==='1';
-    return `<div class="ex${done?' done':''}" data-list="${id}" data-i="${i}">
-      <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="#0c0e12" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
-      <div class="name"><span class="n">${String(i+1).padStart(2,'0')}</span>${name}${cue?`<span class="cue">${cue}</span>`:''}</div>
-      <div class="stats">
-        <span class="st vol"><span class="k">S</span>${sets}</span>
-        <span class="st vol"><span class="k">R</span>${reps}</span>
-        <span class="st rpe">RPE ${rpe}</span>
-        <span class="st rest">${rest}</span>
-      </div></div>`;
+    const done=localStorage.getItem(key(CURW,d,i))==='1';
+    return '<div class="ex'+(done?' done':'')+'" data-i="'+i+'">'+
+      '<div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="#0c0e12" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>'+
+      '<div class="name"><span class="n">'+String(i+1).padStart(2,'0')+'</span>'+name+(cue?'<span class="cue">'+cue+'</span>':'')+'</div>'+
+      '<div class="stats"><span class="st vol"><span class="k">S</span>'+sets+'</span><span class="st vol"><span class="k">R</span>'+reps+'</span><span class="st rpe">RPE '+rpe+'</span><span class="st rest">'+rest+'</span></div>'+
+      '</div>';
   }).join('');
-  updateProg(id);
+  updateProg(d);
 }
-function updateProg(id){
-  const n=id.replace('l','');
-  const total=data[id].length;
+function updateProg(d){
+  const sec=document.getElementById(d);
+  const rows=DATA[CURW][d];
   let done=0;
-  for(let i=0;i<total;i++){if(localStorage.getItem(key(id,i))==='1')done++}
-  const pct=total?Math.round(done/total*100):0;
-  document.getElementById('f'+n).style.width=pct+'%';
-  document.getElementById('p'+n).textContent=done+'/'+total;
+  rows.forEach((_,i)=>{if(localStorage.getItem(key(CURW,d,i))==='1')done++});
+  const pct=rows.length?Math.round(done/rows.length*100):0;
+  sec.querySelector('.dprog .fill').style.width=pct+'%';
+  sec.querySelector('.dprog .pct').textContent=done+'/'+rows.length;
 }
-['l1','l2','l3','l4'].forEach(render);
-
-// toggle on tap
-document.querySelectorAll('.list').forEach(list=>{
-  list.addEventListener('click',e=>{
-    const ex=e.target.closest('.ex'); if(!ex)return;
-    const id=ex.dataset.list, i=ex.dataset.i;
-    const now=ex.classList.toggle('done');
-    if(now)localStorage.setItem(key(id,i),'1');
-    else localStorage.removeItem(key(id,i));
-    updateProg(id);
-  });
+function renderAll(){['l1','l2','l3','l4'].forEach(renderDay);renderIntro();}
+function renderIntro(){
+  const m=wkMeta[CURW];
+  const intro=document.getElementById('wkintro');
+  if(CURW==='sum'){intro.innerHTML='';return;}
+  intro.innerHTML='<div class="ph'+(m[3]?' dl':'')+'">'+m[1]+'</div><h2>'+m[0]+'</h2><p>'+m[2]+'</p>';
+}
+// week tabs
+document.getElementById('wtabs').addEventListener('click',e=>{
+  const b=e.target.closest('.wtab');if(!b)return;
+  document.querySelectorAll('.wtab').forEach(t=>t.classList.remove('on'));
+  b.classList.add('on');
+  CURW=b.dataset.w;
+  const daynav=document.getElementById('daynav');
+  const intro=document.getElementById('wkintro');
+  if(CURW==='sum'){
+    daynav.style.display='none';intro.style.display='none';
+    document.querySelectorAll('.day').forEach(x=>x.classList.remove('on'));
+    document.getElementById('sum').classList.add('on');
+  }else{
+    daynav.style.display='';intro.style.display='';
+    document.querySelectorAll('.day').forEach(x=>x.classList.remove('on'));
+    // mantener el dia activo segun tab de dia
+    const activeDay=document.querySelector('.tab.on').dataset.t;
+    document.getElementById(activeDay).classList.add('on');
+    renderAll();
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
 });
-// clear day
-document.querySelectorAll('.clr').forEach(btn=>{
-  btn.addEventListener('click',e=>{
-    e.stopPropagation();
-    const id=btn.dataset.clr;
-    data[id].forEach((_,i)=>localStorage.removeItem(key(id,i)));
-    render(id);
-    // re-bind not needed: list listener is delegated
-  });
-});
-
-const freqs=[["Pecho","2×","Mar · Vie"],["Dorsal","2×","Mar · Vie"],["Cuádriceps","2×","Jue · Dom"],
-["Bíceps","2×","Mar · Vie"],["Tríceps","2×","Vie + indir."],["Hombro lateral","2×","Mar · Vie"],
-["Hombro post.","2×","Mar · Vie"],["Isquios","2×","Jue · Dom"],["Gemelo","2×","Jue · Dom"]];
-document.getElementById('freq').innerHTML=freqs.map(f=>
- `<div class="fcard"><div class="g">${f[0]}</div><div class="f">${f[1]} / sem</div><div class="d">${f[2]}</div></div>`).join('');
-const tabs=document.getElementById('tabs');
-tabs.addEventListener('click',e=>{
-  const b=e.target.closest('.tab'); if(!b)return;
-  tabs.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+// day tabs
+document.getElementById('tabs').addEventListener('click',e=>{
+  const b=e.target.closest('.tab');if(!b)return;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
   b.classList.add('on');
   document.querySelectorAll('.day').forEach(d=>d.classList.remove('on'));
   document.getElementById(b.dataset.t).classList.add('on');
   window.scrollTo({top:0,behavior:'smooth'});
 });
+// toggle checks (delegado)
+document.querySelectorAll('.list').forEach(list=>{
+  list.addEventListener('click',e=>{
+    const ex=e.target.closest('.ex');if(!ex)return;
+    const d=list.dataset.day,i=ex.dataset.i;
+    const now=ex.classList.toggle('done');
+    if(now)localStorage.setItem(key(CURW,d,i),'1');
+    else localStorage.removeItem(key(CURW,d,i));
+    updateProg(d);
+  });
+});
+// limpiar
+document.querySelectorAll('.clr').forEach(btn=>{
+  btn.addEventListener('click',e=>{
+    e.stopPropagation();
+    const sec=btn.closest('.day'),d=sec.id;
+    DATA[CURW][d].forEach((_,i)=>localStorage.removeItem(key(CURW,d,i)));
+    renderDay(d);
+  });
+});
+// freq
+const freqs=[["Pecho","2x","Mar · Vie"],["Dorsal","2x","Mar · Vie"],["Cuádriceps","2x","Jue · Dom"],
+["Bíceps","2x","Mar · Vie"],["Tríceps","2x","Vie + indir."],["Hombro lateral","2x","Mar · Vie"],
+["Hombro post.","2x","Mar · Vie"],["Isquios","2x","Jue · Dom"],["Gemelo","2x","Jue · Dom"]];
+document.getElementById('freq').innerHTML=freqs.map(f=>'<div class="fcard"><div class="g">'+f[0]+'</div><div class="f">'+f[1]+' / sem</div><div class="d">'+f[2]+'</div></div>').join('');
+renderAll();
 </script>
 </body>
 </html>
